@@ -3,12 +3,16 @@ package com.tweetapp.application.model;
 
 import java.util.List;
 
+//import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+//import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Document
 public class Tweet {
 	@Id
+//	@JsonSerialize(using=ObjectIdSerializer.class)************
 	private String id;
 	private String email;
 	private String tweetMsg;
@@ -58,7 +62,9 @@ public class Tweet {
 	public void setReplyTweet(List<Tweet> replyTweet) {
 		this.replyTweet = replyTweet;
 	}
-	public Tweet(String id, String email, String tweetMsg, String time, int like, String tagText, List<Tweet> replyTweet) {
+	public Tweet(
+			String id,
+			String email, String tweetMsg, String time, int like, String tagText, List<Tweet> replyTweet) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -73,8 +79,6 @@ public class Tweet {
 		return "Tweet [id=" + id + ", email=" + email + ", tweetMsg=" + tweetMsg + ", time=" + time + ", like=" + like
 				+ ", tagText=" + tagText + ", replyTweet=" + replyTweet + "]";
 	}
-	
-	
 	
 }
 

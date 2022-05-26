@@ -1,6 +1,7 @@
 package com.tweetapp.application.controller;
 
 import java.security.Principal;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tweetapp.application.model.User;
@@ -22,7 +22,6 @@ import com.tweetapp.application.service.UserService;
 import com.tweetapp.application.service.UserServiceImpl;
 
 @RestController
-@RequestMapping("/api")
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -43,6 +42,7 @@ public class UserController {
 //	}
 	@PostMapping("/user/save")
 	public ResponseEntity<?> saveUser(@RequestBody User user){
+		System.out.println("registering new user");
 		if(user.getFirstName() == null || user.getEmail() == null || user.getPassword() == null || user.getGender() == null) {
 			Map<String , String> error = new HashMap<>();
 			error.put("StatusCode", "3");

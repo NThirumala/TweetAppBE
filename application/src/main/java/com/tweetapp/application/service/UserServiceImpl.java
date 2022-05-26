@@ -1,6 +1,7 @@
 package com.tweetapp.application.service;
 
 import java.util.ArrayList;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -15,10 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tweetapp.application.Application;
-//import com.tweetapp.application.model.Role;
 import com.tweetapp.application.model.User;
-//import com.tweetapp.application.repo.RoleRepo;
 import com.tweetapp.application.repo.UserRepo;
 
 

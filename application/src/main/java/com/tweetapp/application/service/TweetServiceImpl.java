@@ -15,8 +15,11 @@ public class TweetServiceImpl implements TweetService{
 	@Autowired
 	private TweetRepo tweetRepo;
 
+	
 	@Override
 	public List<Tweet> getAllTweets() {
+		System.out.println("GETTING ALL TWEETS******************************************************************************");
+		System.out.println(tweetRepo.findAll());
 		return tweetRepo.findAll();
 	}
 
@@ -29,14 +32,15 @@ public class TweetServiceImpl implements TweetService{
 	}
 
 	@Override
-	public Tweet postTweet(Tweet tweet) {
+	public Tweet save(Tweet tweet) {
+		System.out.println(tweet);
 		tweetRepo.save(tweet);
 		return tweet;
 	}
 
 	@Override
 	public Tweet updateTweet(Tweet tweet) {
-		Tweet temp = tweetRepo.findById(tweet.getId());
+		Tweet temp = tweetRepo.findById(String.valueOf(tweet.getId()));
 		temp.setTweetMsg(tweet.getTweetMsg());
 		temp.setTime(tweet.getTime());
 		tweetRepo.save(temp);
@@ -62,6 +66,7 @@ public class TweetServiceImpl implements TweetService{
 		String TweetId = tweetId;
 		Tweet temp = tweetRepo.findById(TweetId);
 		List<Tweet> replyTweets = temp.getReplyTweet();
+		retweet.setId(String.valueOf(replyTweets.size()+1));
 		replyTweets.add(retweet);
 		temp.setReplyTweet(replyTweets);
 		tweetRepo.save(temp);
