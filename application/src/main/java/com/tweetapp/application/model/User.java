@@ -1,6 +1,7 @@
 package com.tweetapp.application.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 //import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +13,7 @@ public class User {
 	private String lastname;
 	private String gender;
 	private String dob;
+	@Indexed(unique=true)
 	private String email;
 	private String password;
 	private String contactnumber;

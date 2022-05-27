@@ -40,11 +40,15 @@ public class CustomAuthenticationFilter  extends UsernamePasswordAuthenticationF
 		return authenticationManager.authenticate(authenticationToken);
 	}
 
-//	@Override
-//	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-//			AuthenticationException failed) throws IOException, ServletException {
-//		System.out.println("Executed Unsuccessful authentication for once");
-//	}
+	@Override
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException failed) throws IOException, ServletException {
+		System.out.println("Executed Unsuccessful authentication for once");
+		Map<String, String> result = new HashMap<>();
+		result.put("code", "404");
+		result.put("Description", "User not found.");
+		new ObjectMapper().writeValue(response.getOutputStream(), result);
+	}
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authentication) throws IOException, ServletException {

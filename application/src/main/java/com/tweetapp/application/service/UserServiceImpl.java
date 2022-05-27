@@ -3,11 +3,14 @@ package com.tweetapp.application.service;
 import java.util.ArrayList;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -43,9 +46,21 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 	}
 	
 	@Override
-	public User saveUser(User user) {
+	public Map<String , String> saveUser(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		return userRepo.save(user);
+//		System.out.println(userRepo.save(user));
+		Map<String , String> response = new HashMap<>();
+		try {
+			userRepo.save(user);
+		}catch(DuplicateKeyException exception) {
+			response.put("StatusCode", "11000");
+			response.put("Description" , "Email ID already in Use, please enter new email.");
+			return response;
+		}
+		response.put("StatusCode", "200");
+		response.put("Description" , "User registration successful.");
+		return response;
+		
 	}
 
 	@Override

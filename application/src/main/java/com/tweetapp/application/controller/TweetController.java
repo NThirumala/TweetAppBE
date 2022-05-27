@@ -33,8 +33,8 @@ public class TweetController {
 	}
 	
 	@GetMapping("/tweet/user")
-	public ResponseEntity<List<Tweet>> getUserTweets(@RequestBody User user){
-		return ResponseEntity.ok().body(tweetService.getUserTweets(user.getEmail()));
+	public ResponseEntity<List<Tweet>> getUserTweets(@RequestHeader(value="email", required= false) String email){
+		return ResponseEntity.ok().body(tweetService.getUserTweets(email));
 	}
 	
 	@PostMapping("/tweet/add")

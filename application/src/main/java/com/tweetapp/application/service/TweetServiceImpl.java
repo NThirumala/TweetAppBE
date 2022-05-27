@@ -18,7 +18,6 @@ public class TweetServiceImpl implements TweetService{
 	
 	@Override
 	public List<Tweet> getAllTweets() {
-		System.out.println("GETTING ALL TWEETS******************************************************************************");
 		System.out.println(tweetRepo.findAll());
 		return tweetRepo.findAll();
 	}
