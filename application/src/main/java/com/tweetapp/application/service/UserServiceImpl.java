@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tweetapp.application.exception.CustomException;
 import com.tweetapp.application.model.User;
 import com.tweetapp.application.repo.UserRepo;
 
@@ -41,27 +42,39 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 			
 		}
 		Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-		logger.info("User logged in successfully");
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
 	}
-	
 	@Override
 	public Map<String , String> saveUser(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-//		System.out.println(userRepo.save(user));
 		Map<String , String> response = new HashMap<>();
 		try {
 			userRepo.save(user);
 		}catch(DuplicateKeyException exception) {
-			response.put("StatusCode", "11000");
-			response.put("Description" , "Email ID already in Use, please enter new email.");
-			return response;
+			throw new CustomException("Email ID already in Use, please enter new email.");
+//			response.put("StatusCode", "11000");
+//			response.put("Description" , "Email ID already in Use, please enter new email.");
+//			return response;
 		}
 		response.put("StatusCode", "200");
 		response.put("Description" , "User registration successful.");
 		return response;
-		
 	}
+//	@Override
+//	public Map<String , String> saveUser(User user) {
+//		user.setPassword(passwordEncoder.encode(user.getPassword()));
+//		Map<String , String> response = new HashMap<>();
+//		try {
+//			userRepo.save(user);
+//		}catch(DuplicateKeyException exception) {
+//			response.put("StatusCode", "11000");
+//			response.put("Description" , "Email ID already in Use, please enter new email.");
+//			return response;
+//		}
+//		response.put("StatusCode", "200");
+//		response.put("Description" , "User registration successful.");
+//		return response;
+//	}
 
 	@Override
 	public User getUser(String email) {

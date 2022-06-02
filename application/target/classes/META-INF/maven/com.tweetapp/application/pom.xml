@@ -71,7 +71,6 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>2.0.0-alpha6</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -91,6 +90,7 @@
 				</configuration> -->
 			</plugin>
 		</plugins>
+		<finalName>tweetspringapplication</finalName>
 	</build>
 
 </project>

@@ -2,6 +2,7 @@ package com.tweetapp.application.controller;
 
 import java.security.Principal;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,16 +12,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tweetapp.application.exception.CustomException;
 import com.tweetapp.application.model.User;
 import com.tweetapp.application.service.UserService;
 import com.tweetapp.application.service.UserServiceImpl;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class UserController {
 	@Autowired
@@ -41,7 +45,7 @@ public class UserController {
 //		return ResponseEntity.ok().body(userService.getUser(user.getEmail()));
 //	}
 	@PostMapping("/user/save")
-	public ResponseEntity<?> saveUser(@RequestBody User user){
+	public ResponseEntity<?> saveUser(@RequestBody User user) throws CustomException {
 		System.out.println("registering new user");
 		if(user.getFirstName() == null || user.getEmail() == null || user.getPassword() == null || user.getGender() == null) {
 			Map<String , String> error = new HashMap<>();
@@ -49,7 +53,15 @@ public class UserController {
 			error.put("errorMsg" , "Required user deatils not available. New user registration failed");
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
 		}else {
-			return ResponseEntity.ok().body(userService.saveUser(user));
+			try {
+				return ResponseEntity.ok().body(userService.saveUser(user));
+			}catch(CustomException e) {
+				Map<String, String> response = new HashMap<>();
+				response.put("StatusCode", "11000");
+				response.put("Description" , e.getMessage());
+				System.out.println(response);
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+			}
 		}
 	}
 	

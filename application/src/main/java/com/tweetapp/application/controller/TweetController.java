@@ -2,14 +2,15 @@ package com.tweetapp.application.controller;
 
 import java.security.Principal;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tweetapp.application.model.Tweet;
-import com.tweetapp.application.model.User;
 import com.tweetapp.application.service.TweetService;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class TweetController {
 	
